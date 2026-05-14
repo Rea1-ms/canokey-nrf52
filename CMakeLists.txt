@@ -81,7 +81,7 @@ target_link_libraries(${TARGET} PRIVATE
     canokey-core
     -Wl,--no-whole-archive
 )
-target_link_libraries(${TARGET} PRIVATE c m nosys)
+target_link_libraries(${TARGET} PRIVATE m nosys)
 
 # Generate Git version header
 add_dependencies(${TARGET} gitrev)

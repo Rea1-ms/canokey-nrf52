@@ -1,0 +1,50 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 18,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "nrf52-release",
+      "displayName": "nRF52 Release",
+      "binaryDir": "${sourceDir}/cmake-build-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/toolchain.cmake",
+        "CROSS_COMPILE": "/usr/bin/arm-none-eabi-",
+        "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+        "ENABLE_DEBUG_OUTPUT": "OFF"
+      }
+    },
+    {
+      "name": "nrf52-debug",
+      "displayName": "nRF52 Debug",
+      "binaryDir": "${sourceDir}/cmake-build-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/toolchain.cmake",
+        "CROSS_COMPILE": "/usr/bin/arm-none-eabi-",
+        "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+        "ENABLE_DEBUG_OUTPUT": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "uf2-release",
+      "configurePreset": "nrf52-release",
+      "targets": [
+        "canokey_flash.uf2"
+      ]
+    },
+    {
+      "name": "uf2-debug",
+      "configurePreset": "nrf52-debug",
+      "targets": [
+        "canokey_flash.uf2"
+      ]
+    }
+  ]
+}
