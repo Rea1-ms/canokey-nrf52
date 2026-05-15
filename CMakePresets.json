@@ -13,7 +13,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/toolchain.cmake",
-        "CROSS_COMPILE": "/usr/bin/arm-none-eabi-",
+        "CROSS_COMPILE": "/home/ciallo/Documents/Projects/C/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-",
         "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
         "ENABLE_DEBUG_OUTPUT": "OFF"
       }
@@ -25,7 +25,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/toolchain.cmake",
-        "CROSS_COMPILE": "/usr/bin/arm-none-eabi-",
+        "CROSS_COMPILE": "/home/ciallo/Documents/Projects/C/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-",
         "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
         "ENABLE_DEBUG_OUTPUT": "ON"
       }
