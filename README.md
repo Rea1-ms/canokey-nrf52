@@ -83,9 +83,33 @@ $ make BOARD=feather_nrf52840_express FLASHER=pyocd flash
 Prerequisites:
 
 - CMake >= 3.18
-- GNU ARM Embedded Toolchain, downloaded from [ARM](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads)
+- GNU ARM Embedded Toolchain, downloaded from [ARM](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads).
+  **Use version 12.3.Rel1 or older** (10.3-2021.10 is a safe long-time choice). See the toolchain note below.
 - git (used to generate embedding version string)
 - python3 (used to generate UF2 format DFU file)
+
+> #### ⚠️ Toolchain compatibility note (read this if `lsusb` shows nothing after flashing)
+>
+> Newer toolchains (e.g. ARM GNU Toolchain 13.x / 14.x, Ubuntu 24.04's `gcc-arm-none-eabi`,
+> openSUSE's `cross-arm-none-gcc13`) ship with **newlib ≥ 4.4**, whose `_mainCRTStartup`
+> calls `SYS_HEAPINFO` via the ARM semihosting trap `bkpt 0xab` as its first instruction.
+> Without a debugger attached, that `bkpt` triggers a HardFault before `main()` ever runs,
+> so the device never enumerates on USB — `lsusb` is empty, no Chrome popup, nothing.
+>
+> The project links `--specs=nano.specs` only, and the relevant `_start` is buried inside
+> `libc.a(libc_a-syscalls.o)` along with all the syscalls, so the usual `--specs=nosys.specs`
+> override produces a multi-definition conflict at link time.
+>
+> **Easiest fix:** use **Arm GNU Toolchain ≤ 12.3.Rel1** (or the classic `gcc-arm-none-eabi-10.3-2021.10`).
+> Their newlib does not emit the semihosting trap, and everything just works.
+>
+> After building, verify the binary is clean:
+> ```shell
+> $ arm-none-eabi-objdump -d canokey | grep -c "bkpt.*0x00ab"
+> 0
+> ```
+> If the result is non-zero, you are on a broken toolchain. Switch and rebuild from a clean
+> build directory (the linker cache needs to be wiped).
 
 Build steps:
 
